@@ -1,6 +1,6 @@
 |    Full Name    |Section | Student ID | Email              | Best Way to Contact | Discord Username
 |
-|-----------------|--------|------------|--------------------|---------------------|------------------
+|  Kashif Syed   |   E    | 214404529  | kashif30@my.yorku.ca |       discord      | darkace30
 |
 | Jordi Nakahara |   E    |  218878272 | jordi13@my.yorku.ca |        discord      | superorbit 
 |
