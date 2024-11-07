@@ -18,4 +18,4 @@ Git: Version control for contributing and collaborating on the project.
 # Contribution
 This project will have a branch for each feature we are currently adding into the project.
 We will not use gitflow or pull requests as they are convoluted for the purposes of our project.
-We will use GitHub issues for potential issues that arise within the project
+We will use GitHub issues for potential issues that arise within the project.
