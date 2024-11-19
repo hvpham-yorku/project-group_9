@@ -1,4 +1,5 @@
 import requests
+import urllib.robotparser
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from collections import deque
@@ -9,16 +10,44 @@ import sqlite3
 def is_valid_url(url):
     parsed = urlparse(url)
     return bool(parsed.netloc) and bool(parsed.scheme)
+# Fetch and parse robots.txt
 
+def fetch_robots_txt(domain):
+    robots_url = f"https://{domain}/robots.txt"
+    parser = urllib.robotparser.RobotFileParser()
+    try:
+        response = requests.get(robots_url, timeout=5)
+        if response.status_code == 200:
+            parser.parse(response.text.splitlines())
+        else:
+            parser.allow_all = True
+    except Exception as e:
+       # print(f"Error fetching robots.txt for {domain}: {e}")
+        parser.allow_all = True
+        return parser
+
+# Validate URL using robots.txt
+def is_allowed(url, robot_parsers):
+    parsed_url = urlparse(url)
+    domain = f"{parsed_url.scheme}://{parsed_url.netloc}"
+    if domain not in robot_parsers:
+        robot_parsers[domain] = fetch_robots_txt(domain)
+
+    parser = robot_parsers[domain]
+    return parser.can_fetch("*", url)
 # Crawl function: Crawl multiple websites starting from seed URLs
 def crawl(seed_urls, depth=2, limit=50):
     visited = set()
     queue = deque([(url, depth) for url in seed_urls])
     crawled_data = []
+    robot_parsers = {}
 
     while queue and len(crawled_data) < limit:
         url, depth = queue.popleft()
         if depth == 0 or url in visited:
+            continue
+        if not is_allowed(url, robot_parsers):
+            print(f"Skipped disallowed URL: {url}")
             continue
         visited.add(url)
 
@@ -80,7 +109,7 @@ def search_database(query):
 # Example usage
 if __name__ == "__main__":
     # Step 1: Start crawling from seed URLs
-    seed_urls = ["https://www.cnn.com", "https://www.cnn.com/politics/live-news/election-trump-harris-11-08-24/index.html", "https://www.worlddata.info"]
+    seed_urls = ["https://www.cnn.com", "https://www.cnn.com/politics/live-news/election-trump-harris-11-08-24/index.html"]
     crawled_data = crawl(seed_urls)
 
     # Step 2: Save the crawled data to the database
