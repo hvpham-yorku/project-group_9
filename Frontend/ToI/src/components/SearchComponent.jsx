@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
+// This component makes an API call to the backend and then displays the search result
 function SearchComponent() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -12,16 +14,19 @@ function SearchComponent() {
     setIsLoading(true);
     setError(null);
 
+    // The code block below attempts to send a query to the backend save the results in the "response" variable
     try {
       const response = await axios.get(`/api/search?q=${encodeURIComponent(query)}`);
       setResults(response.data.results || []);
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
+      setError(err.response?.data?.message || 'There was an error');
+      const response = "error";
     } finally {
       setIsLoading(false);
     }
   };
 
+  // The code block below displays the results from the backend
   return (
     <div>
       <form onSubmit={handleSearch}>
