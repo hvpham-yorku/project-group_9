@@ -1,4 +1,5 @@
 doc/.DS_Store
 .DS_Store
-node_modules/
+Backend/node_modules/
+Frontend/ToI/node_modules/
 .env
