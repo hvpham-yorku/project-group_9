@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const { spawn } = require('child_process');
 
@@ -42,13 +43,15 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors());
+
 // Routes
 app.get('/crawl', async (req, res) => {
-    // const seedUrls = req.query.urls ? req.query.urls.split(',') : [];
-    const seedUrls = [
-        "https://www.cnn.com",
-        "https://www.cnn.com/politics/live-news/election-trump-harris-11-08-24/index.html"
-    ];
+    const seedUrls = req.query.urls ? req.query.urls.split(',') : [];
+    // const seedUrls = [
+    //     "https://www.cnn.com",
+    //     "https://www.cnn.com/politics/live-news/election-trump-harris-11-08-24/index.html"
+    // ];
     if (seedUrls.length === 0) {
         return res.status(400).json({ status: "error", message: "No seed URLs provided" });
     }
