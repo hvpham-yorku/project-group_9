@@ -13,7 +13,7 @@ function SearchComponent() {
     setError(null);
 
     try {
-      const response = await axios.get(`/api/search?q=${encodeURIComponent(query)}`);
+      const response = await axios.get(`http://localhost:4000/search?q=${query}`);
       setResults(response.data.results || []);
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred');
