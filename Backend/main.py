@@ -5,6 +5,8 @@ from urllib.parse import urljoin, urlparse
 from collections import deque
 import time
 import sqlite3
+import sys
+import json
 
 # Helper function to validate URLs
 def is_valid_url(url):
@@ -59,7 +61,7 @@ def crawl(seed_urls, depth=2, limit=50):
             continue
 
         soup = BeautifulSoup(response.text, 'html.parser')
-        print(f"Crawling URL: {url}")
+        # print(f"Crawling URL: {url}")
 
         # Extract page info for indexing
         title = soup.find('title').text if soup.find('title') else 'No Title'
@@ -116,12 +118,18 @@ if __name__ == "__main__":
     save_to_database(crawled_data)
 
     # Step 3: Search the database
-    search_query = input("Enter search query: ")
+    search_query = sys.argv[1]
     results = search_database(search_query)
 
     # Display search results
+    out = []
     if results:
         for url, title in results:
-            print(f"Title: {title}, URL: {url}")
+            # out = {'Title': title, 'URL': url}
+            # print(json.dumps(out, indent=4, separators=(', ', ': ')))
+            # print(out)
+            out.append({'Title': title, 'URL': url})
     else:
         print("No results found.")
+    
+    print(out)
