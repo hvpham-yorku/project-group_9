@@ -42,16 +42,12 @@ app.use((req, res, next) => {
     console.log(req.method, req.path);
     next();
 });
-
 app.use(cors());
+app.use(express.json());
 
 // Routes
 app.get('/crawl', async (req, res) => {
     const seedUrls = req.query.urls ? req.query.urls.split(',') : [];
-    // const seedUrls = [
-    //     "https://www.cnn.com",
-    //     "https://www.cnn.com/politics/live-news/election-trump-harris-11-08-24/index.html"
-    // ];
     if (seedUrls.length === 0) {
         return res.status(400).json({ status: "error", message: "No seed URLs provided" });
     }
@@ -72,6 +68,21 @@ app.get('/search', async (req, res) => {
 
     try {
         const result = await executePython('query.py', [query]);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+app.post('/search-ai', async (req, res) => {
+    const { url, question } = req.body;
+
+    if (!url || !question) {
+        return res.status(400).json({ status: "error", message: "URL and question are required" });
+    }
+
+    try {
+        const result = await executePython('searchWithAI.py', [url, question]);
         res.json(result);
     } catch (error) {
         res.status(500).json(error);
