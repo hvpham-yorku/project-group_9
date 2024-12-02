@@ -1,0 +1,4 @@
+requests
+bs4
+python-dotenv
+git+https://github.com/webscraping-ai/webscraping-ai-python.git
