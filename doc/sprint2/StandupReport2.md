@@ -13,4 +13,4 @@ December 2nd.
 
 4. Do you have any blockers?
 
-Since it's near the end of the term our group members have a lot of other work, so it's difficult to put aside time to work on this project.
+It's difficult to work on the frontend before finishing the backend as the design desicions in the backend inform the design of the frontend.
