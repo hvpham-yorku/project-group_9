@@ -3,3 +3,6 @@ doc/.DS_Store
 Backend/node_modules/
 Frontend/ToI/node_modules/
 .env
+Backend/ToI/Lib
+Backend/ToI/Scripts
+Backend/ToI/pyvenv.cfg

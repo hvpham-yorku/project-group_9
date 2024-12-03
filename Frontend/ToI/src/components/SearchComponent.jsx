@@ -16,7 +16,7 @@ function SearchComponent() {
 
     // The code block below attempts to send a query to the backend save the results in the "response" variable
     try {
-      const response = await axios.get(`http://localhost:4000/search?q=${query}`);
+      const response = await axios.get(`http://localhost:3000/search?q=${query}`);
       setResults(response.data.results || []);
     } catch (err) {
       setError(err.response?.data?.message || 'There was an error');
