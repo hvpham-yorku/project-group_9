@@ -1,8 +1,18 @@
-# React + Vite
+# ToI Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+The frontend of this project uses React and Vite. It also incorporates axios to communicate with the backend and tailwind css for styling.
 
-Currently, two official plugins are available:
+## Requirements
+ - npm
+ - node.js
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+In the directory that this README is in run the following:
+
+npm install
+
+## Running the project
+To run the project first run the backend, then run the following command:
+
+npm run dev
